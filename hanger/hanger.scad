@@ -13,15 +13,11 @@ module hook_tip(width, height) {
 }
 
 scale(10) {
-/*
+
 	minkowski() {
 		union() {
-			hook(0.3, 0.2);
-			hook_tip(0.3, 0.2);
+			hook(0.01, 0.01);
 		}
-*/
 		sphere(0.1, $fs = 0.05);
-/*
 	}
-*/
 }
