@@ -1,4 +1,4 @@
-module hook(size, width, height) {
+module hook(width, height) {
 	difference() {
 		cylinder(r = 1 + width / 2, h = height, center = true, $fs=0.01);
 		cylinder(r = 1 - width / 2, h = height * 2, center = true, $fs=0.01);
@@ -7,5 +7,6 @@ module hook(size, width, height) {
 	}
 }
 
+
 scale(10)
-	hook(8, 0.3, 0.2);
+	hook(0.3, 0.2);
