@@ -13,9 +13,34 @@ module angle_cutter(a1, a2, length, height) {
 				cube([length, 2 * length, height], true);
 	}
 
-	union() {
-		rect(a1);
-		rect(a2);
+	module rectpie0(a) {
+		if (a <= 180) {
+			intersection() {
+				rect(0);
+				rect(180 + a);
+			}
+		}
+		else {
+			union() {
+				rect(0);
+				rect(180 + a);
+			}
+		}
+	}
+
+	a1norm = a1 % 360;
+	a2norm = a2 % 360;
+	a2norm2 = a2norm < a1norm ? a2norm + 360 : a2norm;
+	adiff = a2norm2 - a1norm;
+
+	rotate([0, 0, -a1norm])
+		rectpie0(adiff);
+}
+
+module arc(width, height, a1, a2) {
+	intersection() {
+		ring(width, height);
+		angle_cutter(a1, a2, 1 + width, height * 2 );
 	}
 }
 
@@ -39,10 +64,11 @@ module hook_extension(length, width, height) {
 }
 
 module hook_joint(ext_len, width, height) {
-	union() {
-		ring(width, height);
-		angle_cutter(30, 90, 1 + width, height * 2);
-	}
+//	union() {
+//		ring(width, height);
+//		angle_cutter(1030, 1090, 1 + width, height * 2);
+//	}
+	arc(width, height, 1030, 1090);
 }
 
 scale(10) {
