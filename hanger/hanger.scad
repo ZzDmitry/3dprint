@@ -6,13 +6,16 @@ module ring(width, height) {
 }
 
 module angle_cutter(a1, a2, length, height) {
+
+	module rect(a) {
+		rotate([0, 0, -a])
+			translate([length / 2, 0, 0])
+				cube([length, 2 * length, height], true);
+	}
+
 	union() {
-		rotate([0, 0, -a1])
-			translate([length / 2, 0, 0])
-				cube([length, 2 * length, height], true);
-		rotate([0, 0, -a2])
-			translate([length / 2, 0, 0])
-				cube([length, 2 * length, height], true);
+		rect(a1);
+		rect(a2);
 	}
 }
 
