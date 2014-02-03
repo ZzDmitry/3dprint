@@ -6,7 +6,14 @@ module ring(width, height) {
 }
 
 module angle_cutter(a1, a2, length, height) {
-	
+	union() {
+		rotate([0, 0, -a1])
+			translate([length / 2, 0, 0])
+				cube([length, 2 * length, height], true);
+		rotate([0, 0, -a2])
+			translate([length / 2, 0, 0])
+				cube([length, 2 * length, height], true);
+	}
 }
 
 module hook(width, height) {
@@ -31,6 +38,7 @@ module hook_extension(length, width, height) {
 module hook_joint(ext_len, width, height) {
 	union() {
 		ring(width, height);
+		angle_cutter(30, 90, 1 + width, height * 2);
 	}
 }
 
