@@ -30,16 +30,25 @@ module cross_joint(shoulders_angle, width, height) {
 		arc(width, height, -180 + shoulders_angle, -90);
 }
 
-scale(10) {
-	hook(0.3, 0.2);
-	hook_tip(0.3, 0.2);
-	hook_extension(0.5, 0.3, 0.2);
-	hook_joint(0.5, 0.3, 0.2);
-	translate([0, -(hook_joint_length() + 0.5), 0]) {
-		cross_joint(0, 0.3, 0.2);
-		translate([0, -1, 0])
-			scale([1, 0.3, 0.2])
-				rotate([0, 90, 0])
-					cylinder(2, 1, 1, true, $fs = 0.01);
+module hanger() {
+
+	w = 0.3;
+	h = 0.2;
+	h_ext = 0.5;
+
+	scale(10) {
+		hook(w, h);
+		hook_tip(w, h);
+		hook_extension(h_ext, w, h);
+		hook_joint(h_ext, w, h);
+		translate([0, -(hook_joint_length() + h_ext), 0]) {
+			cross_joint(0, w, h);
+			translate([0, -1, 0])
+				scale([1, w, h])
+					rotate([0, 90, 0])
+						cylinder(2, 1, 1, true, $fs = 0.01);
+		}
 	}
 }
+
+hanger();
