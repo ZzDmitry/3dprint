@@ -1,3 +1,7 @@
+echo(sin(30), sin(45), sin(60));
+echo(sqrt(2) / 2, sqrt(2) / 3, sqrt(2) / 4);
+echo(2/sqrt(2), 3/sqrt(2), 4/sqrt(2));
+
 use <primitives.scad>;
 
 module hook(width, height) {
@@ -14,14 +18,18 @@ module hook_extension(length, width, height) {
 		cube([width, length, height], true);
 }
 
+function hook_joint_length() = 2 * cos(30);
+
 module hook_joint(ext_len, width, height) {
 	translate([0, -ext_len, 0])
-		arc(width, height, 90, 90 + 45);
+		arc(width, height, 90, 90 + 60);
+	translate([1, -(ext_len + hook_joint_length()), 0])
+		arc(width, height, -90, -30);
 }
 
 scale(10) {
 	hook(0.3, 0.2);
 	hook_tip(0.3, 0.2);
-	hook_extension(1, 0.3, 0.2);
-	hook_joint(1, 0.3, 0.2);
+	hook_extension(0.5, 0.3, 0.2);
+	hook_joint(0.5, 0.3, 0.2);
 }
