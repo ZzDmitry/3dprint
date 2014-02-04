@@ -38,6 +38,8 @@ scale(10) {
 	translate([0, -(hook_joint_length() + 0.5), 0]) {
 		cross_joint(0, 0.3, 0.2);
 		translate([0, -1, 0])
-			cube([2, 0.3, 0.2 * 2], true);
+			scale([1, 0.3, 0.2])
+				rotate([0, 90, 0])
+					cylinder(2, 1, 1, true, $fs = 0.01);
 	}
 }
