@@ -1,7 +1,3 @@
-echo(sin(30), sin(45), sin(60));
-echo(sqrt(2) / 2, sqrt(2) / 3, sqrt(2) / 4);
-echo(2/sqrt(2), 3/sqrt(2), 4/sqrt(2));
-
 use <primitives.scad>;
 
 module hook(width, height) {
