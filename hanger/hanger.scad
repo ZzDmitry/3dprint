@@ -23,9 +23,15 @@ module hook_joint(ext_len, width, height) {
 		arc(width, height, -90, -30);
 }
 
+module cross_joint(shoulders_angle, width, height) {
+	arc(width, height, 90, 180 - 20);
+}
+
 scale(10) {
+/*
 	hook(0.3, 0.2);
 	hook_tip(0.3, 0.2);
 	hook_extension(0.5, 0.3, 0.2);
 	hook_joint(0.5, 0.3, 0.2);
+*/
 }
