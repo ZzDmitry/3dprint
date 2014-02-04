@@ -10,7 +10,7 @@ module hook_tip(width, height) {
 }
 
 module hook_extension(length, width, height) {
-	translate([1, -0.5, 0])
+	translate([1, -length / 2, 0])
 		cube([width, length, height], true);
 }
 
