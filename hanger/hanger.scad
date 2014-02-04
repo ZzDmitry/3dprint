@@ -24,12 +24,13 @@ module hook_joint(ext_len, width, height) {
 //		ring(width, height);
 //		angle_cutter(1030, 1090, 1 + width, height * 2);
 //	}
-	arc(width, height, 1030, 1090);
+	translate([0, -ext_len, 0])
+		arc(width, height, 90, 90 + 45);
 }
 
 scale(10) {
-//	hook(0.3, 0.2);
-// hook_tip(0.3, 0.2);
-//	hook_extension(1, 0.3, 0.2);
+	hook(0.3, 0.2);
+	hook_tip(0.3, 0.2);
+	hook_extension(1, 0.3, 0.2);
 	hook_joint(1, 0.3, 0.2);
 }
