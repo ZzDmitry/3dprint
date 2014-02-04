@@ -30,6 +30,14 @@ module cross_joint(shoulders_angle, width, height) {
 		arc(width, height, -180 + shoulders_angle, -90);
 }
 
+module wing(length, width_scale, height_scale) {
+	linear_extrude(length, scale = [width_scale, height_scale])
+		circle(1, $fs = 0.01);
+	translate([0, 0, length])
+		scale([width_scale, height_scale, 1])
+			sphere(1, $fs = 0.01);
+}
+
 module hanger() {
 
 	w = 0.3;
@@ -45,10 +53,15 @@ module hanger() {
 			cross_joint(0, w, h);
 			translate([0, -1, 0])
 				scale([1, w, h])
-					rotate([0, 90, 0])
+					rotate([0, 90, 0]) {
 						cylinder(2, 1, 1, true, $fs = 0.01);
+						translate([0, 0, 1])
+							rotate([0, 0, 0])wing(6, 3, 1);
+					}
 		}
 	}
 }
 
 hanger();
+
+wing(6, 3, 1);
