@@ -1,29 +1,20 @@
 use <primitives.scad>;
 
 module hook(width, height) {
-	difference() {
-		cylinder(r = 1 + width / 2, h = height, center = true, $fs=0.01);
-		cylinder(r = 1 - width / 2, h = height * 2, center = true, $fs=0.01);
-		translate([0, (1 + width) / 2, 0])
-			cube([3, 1 + width, height * 2], true);
-	}
+	arc(width, height, -90, 90);
 }
 
 module hook_tip(width, height) {
-	translate([1, 0, 0])
+	translate([-1, 0, 0])
 		cylinder(r = width / 2, h = height, center = true, $fs = 0.01);
 }
 
 module hook_extension(length, width, height) {
-	translate([-1, 0.5, 0])
+	translate([1, -0.5, 0])
 		cube([width, length, height], true);
 }
 
 module hook_joint(ext_len, width, height) {
-//	union() {
-//		ring(width, height);
-//		angle_cutter(1030, 1090, 1 + width, height * 2);
-//	}
 	translate([0, -ext_len, 0])
 		arc(width, height, 90, 90 + 45);
 }
