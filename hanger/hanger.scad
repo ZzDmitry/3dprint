@@ -24,23 +24,17 @@ module hook_joint(ext_len, width, height) {
 }
 
 module cross_joint(shoulders_angle, width, height) {
-	difference() {
-		union() {
-			translate([-1, 0, 0])
-				arc(width, height, 90, 180 - shoulders_angle);
-			translate([1, 0, 0])
-				arc(width, height, -180 + shoulders_angle, -90);
-		}
-		translate([0, -(1 + width / 2), 0])
-			cube([3, width, height * 2], true);
-	}
+	translate([-1, 0, 0])
+		arc(width, height, 90, 180 - shoulders_angle);
+	translate([1, 0, 0])
+		arc(width, height, -180 + shoulders_angle, -90);
 }
 
 module cross_plate(width, height) {
 	translate([0, -1, 0])
 		scale([1, width, height])
 			rotate([0, 90, 0])
-				cylinder(2, 1, 1, true, $fs = 0.01);
+				cylinder(2, sqrt(2), sqrt(2), true, $fs = 0.01);
 }
 
 module wing(length, width_scale, height_scale) {
