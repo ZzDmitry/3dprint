@@ -24,10 +24,23 @@ module hook_joint(ext_len, width, height) {
 }
 
 module cross_joint(shoulders_angle, width, height) {
-	translate([-1, 0, 0])
-		arc(width, height, 90, 180 - shoulders_angle);
-	translate([1, 0, 0])
-		arc(width, height, -180 + shoulders_angle, -90);
+	difference() {
+		union() {
+			translate([-1, 0, 0])
+				arc(width, height, 90, 180 - shoulders_angle);
+			translate([1, 0, 0])
+				arc(width, height, -180 + shoulders_angle, -90);
+		}
+		translate([0, -(1 + width / 2), 0])
+			cube([3, width, height * 2], true);
+	}
+}
+
+module cross_plate(width, height) {
+	translate([0, -1, 0])
+		scale([1, width, height])
+			rotate([0, 90, 0])
+				cylinder(2, 1, 1, true, $fs = 0.01);
 }
 
 module wing(length, width_scale, height_scale) {
@@ -51,13 +64,14 @@ module hanger() {
 		hook_joint(h_ext, w, h);
 		translate([0, -(hook_joint_length() + h_ext), 0]) {
 			cross_joint(0, w, h);
-			translate([0, -1, 0])
-				scale([1, w, h])
-					rotate([0, 90, 0]) {
-						cylinder(2, 1, 1, true, $fs = 0.01);
-						translate([0, 0, 1])
-							rotate([0, 0, 0])wing(6, 3, 1);
-					}
+			cross_plate(w / 2, h / 2);
+//			translate([0, -1, 0])
+//				scale([1, w * 0.5, h * 0.5])
+//					rotate([0, 90, 0]) {
+//						cylinder(2, 1, 1, true, $fs = 0.01);
+//						translate([0, 0, 1])
+//							wing(6, 3, 0.5);
+//					}
 		}
 	}
 }
