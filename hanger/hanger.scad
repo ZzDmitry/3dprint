@@ -37,15 +37,7 @@ module cross_plate(width, height) {
 				cylinder(2, 0.5, 0.5, true, $fs = 0.01);
 }
 
-module wing(length, width_scale, height_scale) {
-	linear_extrude(length, scale = [width_scale, height_scale])
-		circle(1, $fs = 0.01);
-	translate([0, 0, length])
-		scale([width_scale, height_scale, 1])
-			sphere(1, $fs = 0.01);
-}
-
-module wing2(length, width, height, end_width, end_height, round_length) {
+module wing(length, width, height, end_width, end_height, round_length) {
 	linear_extrude(length, scale = [end_height / height, end_width / width])
 		scale([height / 2, width / 2, 1])
 			circle(1, $fs = 0.01);
@@ -59,11 +51,11 @@ module wing2(length, width, height, end_width, end_height, round_length) {
 		}
 }
 
-module wing2_angle(length, width, height, end_width, end_height, round_length, angle) {
+module wing_angle(length, width, height, end_width, end_height, round_length, angle) {
 	translate([0, width / 2, 0])
 		rotate([angle, 0, 0])
 			translate([0, -width / 2, 0])
-				wing2(length, width, height, end_width, end_height, round_length);
+				wing(length, width, height, end_width, end_height, round_length);
 }
 
 module hanger() {
@@ -73,6 +65,8 @@ module hanger() {
 	h_ext = 0.5;
 	l = 6;
 	la = 10;
+	sh_w = 3;
+	sh_r = 1;
 
 	plate_w = sqrt(2) * w;
 	plate_h = sqrt(2) * h;
@@ -84,44 +78,15 @@ module hanger() {
 		hook_joint(h_ext, w, h);
 		translate([0, -(hook_joint_length() + h_ext), 0]) {
 			cross_joint(0, w, h);
-			//cross_plate(w / 2, h / 2);
 			cross_plate(plate_w, plate_h);
 			translate([-1, -1, 0])
 				rotate([0, -90, 0])
-					wing2_angle(l, plate_w, plate_h, plate_w, plate_h * 3, 2, la);
+					wing_angle(l, plate_w, plate_h, plate_w, plate_h * sh_w, sh_r, la);
 			translate([1, -1, 0])
 				rotate([0, 90, 0])
-					wing2_angle(l, sqrt(2) * 0.3, sqrt(2) * 0.2, sqrt(2) * 0.3, sqrt(2) * 0.2 * 3, 2, la);
-/*//
-			translate([0, -1, 0]) {
-				scale([1, w * 0.7, h * 0.7])
-					rotate([0, 90, 0]) {
-						//cylinder(2, 1, 1, true, $fs = 0.01);
-						translate([0, 0, 1])
-							#wing(6, 3, 0.5);
-					}
-			}
-//*/
-
+					wing_angle(l, plate_w, plate_h, plate_w, plate_h * sh_w, sh_r, la);
 		}
 	}
 }
 
 hanger();
-/*
-scale([1, 0.3 * 0.7, 0.2 * 0.7])
-	rotate([0, 90, 0])
-		wing(6, 3, 1);
-
-scale([1, sqrt(2), sqrt(2)])
-	translate([0, 1, 0])
-		rotate([0, 90, 0])
-			wing2(6, 0.3, 0.2, 0.3, 0.2 * 3, 2);
-*/
-translate([0, -1, 0])
-	rotate([0, 90, 0])
-		wing2(6, 0.3, 0.2, 0.3, 0.2 * 3, 2);
-
-translate([0, 0, 0])
-	rotate([0, 90, 0])
-		wing2_angle(6, 0.3, 0.2, 0.3, 0.2 * 3, 2, 10);
