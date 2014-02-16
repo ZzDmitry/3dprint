@@ -36,16 +36,16 @@ module hook_tip(width, height) {
 }
 
 module hook_extension(length, width, height) {
-	translate([1, -length / 2, 0])
+	translate([1, -length / 2 + 0.01, 0])
 		rotate([90, 0, 0])
-			bar_facet(length, width, height);
+			bar_facet(length + 0.02, width, height);
 }
 
 function hook_joint_length() = 2 * cos(30);
 
 module hook_joint(ext_len, width, height) {
 	translate([0, -ext_len, 0])
-		arc_facet(width, height, 90, 90 + 60);
+		arc_facet(width, height, 90, 90 + 61);
 	translate([1, -(ext_len + hook_joint_length()), 0])
 		arc_facet(width, height, -90, -30);
 }
@@ -54,14 +54,14 @@ module cross_joint(shoulders_angle, width, height) {
 	translate([-1, 0, 0])
 		arc_facet(width, height, 90, 180 - shoulders_angle);
 	translate([1, 0, 0])
-		arc_facet(width, height, -180 + shoulders_angle, -90);
+		arc_facet(width, height, -180 + shoulders_angle, -89);
 }
 
 module cross_plate(width, height) {
 	translate([0, -1, 0])
 		scale([1, width, height])
 			rotate([0, 90, 0])
-				cylinder(2, 0.5, 0.5, true, $fs = 0.01);
+				cylinder(2.1, 0.5, 0.5, true, $fs = 0.01);
 }
 
 module wing(length, width, height, end_width, end_height, round_length) {
@@ -99,19 +99,19 @@ module hanger() {
 	plate_h = sqrt(2) * h;
 
 	scale(10) {
-		hook(w, h);
-		hook_tip(w, h);
-		hook_extension(h_ext, w, h);
-		hook_joint(h_ext, w, h);
+//		hook(w, h);
+//		hook_tip(w, h);
+//		hook_extension(h_ext, w, h);
+//		hook_joint(h_ext, w, h);
 		translate([0, -(hook_joint_length() + h_ext), 0]) {
 			cross_joint(0, w, h);
 			cross_plate(plate_w, plate_h);
 			translate([-1, -1, 0])
 				rotate([0, -90, 0])
 					wing_angle(l, plate_w, plate_h, plate_w, plate_h * sh_w, sh_r, la);
-			translate([1, -1, 0])
-				rotate([0, 90, 0])
-					wing_angle(l, plate_w, plate_h, plate_w, plate_h * sh_w, sh_r, la);
+//			translate([1, -1, 0])
+//				rotate([0, 90, 0])
+//					wing_angle(l, plate_w, plate_h, plate_w, plate_h * sh_w, sh_r, la);
 		}
 	}
 }
