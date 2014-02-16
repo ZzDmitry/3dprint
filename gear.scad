@@ -1,27 +1,27 @@
-module gear(h, n, s) {
+module gear(n) {
 	$fs = 0.01;
 	
-	count = 2 * n;
-	a_step = 360 / count;
-	cut_size = 2 * PI / count / 2;
+	a_step = 360 / n;
+	cut_size = PI / n / 2;
 
 	module cut(extra_height) {
 		for (a = [0 : n - 1]) {
-			rotate([0, 0, 2 * a_step * a])
+			rotate([0, 0, a_step * a])
 				translate([1, 0, 0])
-					cylinder(extra_height * h, cut_size, cut_size, true);
+					cylinder(extra_height, cut_size, cut_size, true);
 		}
 	}
 
 	difference() {
 		union() {
-			cylinder(h, 1, 1, true);
+			cylinder(1, 1, 1, true);
 			cut(1);
 		}
-		rotate([0, 0, a_step])
+		rotate([0, 0, a_step / 2])
 			cut(2);
 	}
 
 }
 
-gear(0.1, 20);
+scale([1,1,0.1])
+	gear(20);
